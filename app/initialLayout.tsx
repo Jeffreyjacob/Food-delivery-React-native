@@ -23,6 +23,11 @@ const InitialLayout = () => {
         <Stack.Screen name='index' options={{headerShown:false}}/>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name='Auth' options={{headerShown:false}}/>
+        <Stack.Screen name='EmailCodeVerification' options={{
+          headerBackTitle:'back',
+          headerTitle:"",
+          headerShadowVisible:false
+        }}/>
     </Stack>
     
   )
