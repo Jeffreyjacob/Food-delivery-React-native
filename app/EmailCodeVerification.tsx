@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator } from 'react-native'
+import { View, Text, StyleSheet, TouchableOpacity, ActivityIndicator, Alert } from 'react-native'
 import React, { useState } from 'react';
 import {
     CodeField,
@@ -8,7 +8,7 @@ import {
 } from 'react-native-confirmation-code-field';
 import { useRouter } from 'expo-router';
 import Colors from '@/constants/Colors';
-import { useSignUp } from '@clerk/clerk-expo';
+import { isClerkAPIResponseError, useSignUp } from '@clerk/clerk-expo';
 const CELL_COUNT = 6;
 
 const EmailCodeVerification = () => {
@@ -21,7 +21,22 @@ const EmailCodeVerification = () => {
         setValue,
     });
     const onVerification = async () => {
-
+       setLoading(true)
+       if(!signUp && !isLoaded){
+        return
+       }
+       try{
+        const completeSignUp = await signUp.attemptEmailAddressVerification({
+            code:value
+        })
+        await setActive({ session: completeSignUp.createdSessionId });
+        setLoading(false);
+       }catch(err){
+            if(isClerkAPIResponseError(err)){
+                Alert.alert('Error',err.errors[0].message);
+                setLoading(false)
+            }
+       }
     }
     return (
         <View style={{ flex: 1, backgroundColor: '#fff', paddingHorizontal: 30, paddingVertical: 40 }}>

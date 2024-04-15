@@ -1,9 +1,11 @@
-import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet } from 'react-native'
-import React, { useRef } from 'react';
+import { View, Text, TextInput, ScrollView, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native'
+import React, { useRef, useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useRouter } from 'expo-router';
+import { isClerkAPIResponseError, useSignUp } from '@clerk/clerk-expo';
+
 
 type formValue = {
   fullname: string
@@ -21,6 +23,8 @@ const SignupCard = () => {
   const { control, handleSubmit, formState: { isSubmitting } } = useForm<formValue>({ resolver: zodResolver(formSchema) })
    const ScrollViewRef = useRef<ScrollView>(null);
    const PasswordInputRef = useRef<TextInput>(null);
+   const { isLoaded, signUp, setActive } = useSignUp();
+   const [loading,setLoading] = useState(false);
    const navigate = useRouter();
 
    const scrolltoInput = ()=>{
@@ -32,8 +36,25 @@ const SignupCard = () => {
   
   const onsubmit = async (data: any) => {
     if (data) {
-     console.log(data);
-     navigate.navigate('/EmailCodeVerification')
+       setLoading(true)
+       if( !isLoaded && !signUp){
+           return;
+       };
+       try{
+        await signUp.create({
+          firstName:data?.fullname,
+          emailAddress:data?.email,
+          password:data?.password
+        })
+        await signUp.prepareEmailAddressVerification({ strategy: "email_code" });
+        navigate.navigate('/EmailCodeVerification')
+        setLoading(false);
+       }catch(err){
+          if(isClerkAPIResponseError(err)){
+            Alert.alert('Error',err.errors[0].message)
+            setLoading(false)
+          }
+       }
     }
   }
 
@@ -110,12 +131,27 @@ const SignupCard = () => {
       </View>
 
       {/**sign up button */}
-      <TouchableOpacity onPress={handleSubmit(onsubmit)}
-        style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}>
-        <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
-          Sign Up
-        </Text>
-      </TouchableOpacity>
+      {
+        loading ? (
+          <TouchableOpacity style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}
+          disabled>
+          <View style={{flexDirection:"row",gap:10,justifyContent:"center"}}>
+          <ActivityIndicator color='#fff'/>
+            <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
+              Loading...
+            </Text>
+          </View>
+        </TouchableOpacity>
+        ):(
+          <TouchableOpacity onPress={handleSubmit(onsubmit)}
+          style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}>
+          <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
+            Sign Up
+          </Text>
+        </TouchableOpacity>
+        )
+      }
+      
 
     </ScrollView>
   )

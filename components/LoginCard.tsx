@@ -1,8 +1,10 @@
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native'
-import React from 'react';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator, Alert } from 'react-native'
+import React, { useState } from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
+import { isClerkAPIResponseError, useSignIn} from '@clerk/clerk-expo';
+
 
 type formValue = {
   email: string,
@@ -14,11 +16,29 @@ const formSchema = z.object({
 });
 
 const LoginCard = () => {
-  const { control, handleSubmit,formState:{isSubmitting}} = useForm<formValue>({ resolver: zodResolver(formSchema) })
+  const { control, handleSubmit} = useForm<formValue>({ resolver: zodResolver(formSchema) })
+  const [loading,setLoading] = useState(false);
+  const {isLoaded,signIn,setActive} = useSignIn();
 
   const onsubmit = async (data:any) => {
     if(data){
-      console.log(data);
+      setLoading(true)
+      if(!isLoaded && !signIn){
+        return
+      }
+      try{
+      const completeSignin =  await signIn.create({
+        identifier:data?.email,
+        password:data?.password
+      })
+      await setActive({session:completeSignin.createdSessionId})
+      setLoading(false);
+      }catch(err){
+         if(isClerkAPIResponseError(err)){
+          Alert.alert('Error',err.errors[0].message)
+         }
+      }
+
     }
   }
   return (
@@ -73,8 +93,9 @@ const LoginCard = () => {
 
       {/**Login Button */}
       {
-        isSubmitting ? 
-        <TouchableOpacity style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}>
+        loading ? 
+        <TouchableOpacity style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}
+        disabled>
           <View style={{flexDirection:"row",gap:10}}>
           <ActivityIndicator color='#fff'/>
             <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
