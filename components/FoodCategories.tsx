@@ -4,7 +4,11 @@ import Colors from '@/constants/Colors';
 import * as Haptics from 'expo-haptics';
 
 
-const FoodCategories = () => {
+interface Props{
+    onCategoryChange:(category:string)=> void
+}
+
+const FoodCategories = ({onCategoryChange}:Props) => {
     const Categories = [
         {id:"1",name:"Beef"},
         {id:"2",name:"Chicken"},
@@ -25,6 +29,7 @@ const FoodCategories = () => {
             ScrollViewRef.current?.scrollTo({x:x - 50,y:0,animated:true});
         })
         Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Light);
+        onCategoryChange(Categories[index].name)
     }
   return (
     <ScrollView horizontal 
