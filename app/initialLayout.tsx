@@ -28,6 +28,11 @@ const InitialLayout = () => {
           headerTitle:"",
           headerShadowVisible:false
         }}/>
+        <Stack.Screen name='Search' options={{
+          headerBackTitle:'',
+          headerShadowVisible:false,
+          animation: 'slide_from_bottom',
+        }}/>
     </Stack>
     
   )
