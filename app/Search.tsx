@@ -68,6 +68,7 @@ const Search = () => {
                                      keyExtractor={(item) => item?.idMeal}
                                      renderItem={({ item, index }) => (
                                          <Animated.View style={{ marginTop: 70 }} entering={FadeInUp.delay(index * 10)}>
+                                            <TouchableOpacity onPress={()=>navigate.navigate(`/FoodDetails/${item.idMeal}`)}>
                                              <View style={{
                                                  backgroundColor: "#fff", height: 150, width: 150, marginHorizontal: 20, borderRadius: 30,
                                                  position: 'relative'
@@ -92,6 +93,7 @@ const Search = () => {
                                                      </Text>
                                                  </View>
                                              </View>
+                                             </TouchableOpacity>
                                          </Animated.View>
                                      )}
                                      numColumns={itemRow}

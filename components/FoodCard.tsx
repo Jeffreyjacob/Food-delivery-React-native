@@ -1,8 +1,9 @@
-import { View, Text, ScrollView, FlatList, ActivityIndicator } from 'react-native'
+import { View, Text, ScrollView, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import React from 'react'
 import Animated, { FadeInLeft, FadeInRight, FadeOutLeft } from 'react-native-reanimated'
 import Colors from '@/constants/Colors'
 import Food from './Food'
+import { Link, useRouter } from 'expo-router'
 
 
 interface Props {
@@ -11,6 +12,7 @@ interface Props {
 }
 
 const FoodCard = ({ FoodData, loading }: Props) => {
+    const navigate = useRouter()
     return (
         <View>
             {
@@ -24,7 +26,9 @@ const FoodCard = ({ FoodData, loading }: Props) => {
                             <ScrollView horizontal >
                                 <Animated.View entering={FadeInLeft} 
                                 style={{marginTop:80}}>
-                                 <Food image={item?.strMealThumb} name={item?.strMeal}/>
+                                    <TouchableOpacity onPress={()=>navigate.navigate(`/FoodDetails/${item.idMeal}`)}>
+                                    <Food image={item?.strMealThumb} name={item?.strMeal}/>
+                                    </TouchableOpacity>                 
                                 </Animated.View>
                             </ScrollView>
                         )}

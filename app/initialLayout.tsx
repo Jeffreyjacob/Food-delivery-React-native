@@ -33,6 +33,12 @@ const InitialLayout = () => {
           headerShadowVisible:false,
           animation: 'slide_from_bottom',
         }}/>
+        <Stack.Screen name='FoodDetails/[id]' options={{
+          headerTitle:'',
+          headerBackVisible:false,
+          headerShadowVisible:false,
+          headerStyle:{backgroundColor:'#F6F6F9'}
+        }}/>
     </Stack>
     
   )
