@@ -19,7 +19,7 @@ const Food = ({image,name}:Props) => {
         </View>
 
       <View style={{justifyContent:"center",alignItems:"center",marginTop:140}}>
-      <Text  style={{fontSize:18,textAlign:"center",width:160,fontFamily:"SFSemiBold"}}>
+      <Text  style={{fontSize:22,textAlign:"center",width:160,fontFamily:"SFSemiBold"}}>
         {name}
         </Text>
       </View>

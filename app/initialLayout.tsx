@@ -26,10 +26,10 @@ const InitialLayout = () => {
         <Stack.Screen name='EmailCodeVerification' options={{
           headerBackTitle:'back',
           headerTitle:"",
-          headerShadowVisible:false
+          headerShadowVisible:false,
         }}/>
         <Stack.Screen name='Search' options={{
-          headerBackTitle:'',
+          headerBackVisible:false,
           headerShadowVisible:false,
           animation: 'slide_from_bottom',
         }}/>
