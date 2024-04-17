@@ -45,12 +45,18 @@ const Delivery = () => {
                             backgroundColor: '#fff', width: 315, height: 156, borderRadius: 20,
                             justifyContent: "center", alignItems: 'center'
                         }}>
-                            <Text style={[styles.cardName, { borderBottomWidth: 1 }]}>
-                                {user?.firstName}
-                            </Text>
-                            <Text style={styles.cardText}>
-                                No 11 fountain street pako baruwo lagos Nigeria
-                            </Text>
+                            <View style={{ borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#9F9F9F" }}>
+                                <Text style={[styles.cardName, { borderBottomWidth: 1 }]}>
+                                    {user?.firstName}
+                                </Text>
+                            </View>
+
+                            <View style={{ borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "#9F9F9F" }}>
+                                <Text style={styles.cardText}>
+                                    No 11 fountain street pako baruwo lagos Nigeria
+                                </Text>
+                            </View>
+
                             <Text style={styles.cardText}>
                                 +2347082406281
                             </Text>
@@ -66,22 +72,57 @@ const Delivery = () => {
                     </Text>
                     <View style={{
                         backgroundColor: '#fff', width: 315, height: 156, borderRadius: 20,
-                        justifyContent: "center", alignItems: 'center'
+                        justifyContent: "center", paddingHorizontal: 20
                     }}>
                         <RadioButton.Group onValueChange={newValue => setDelivery(newValue)} value={delivery}>
-                            <View style={{flexDirection:'row',alignItems:"center"}}>
-                                <View style={{}}>
-                                <RadioButton value="DoorDelivery" />
+                            <View style={{
+                                flexDirection: 'row', alignItems: "center", gap: 10, marginBottom: 15,
+                                borderBottomWidth: StyleSheet.hairlineWidth, borderBottomColor: "9F9F9F", paddingBottom: 10,
+                                justifyContent:'space-between'
+                            }}>
+                                <Text style={{ fontFamily: "SFRegular", fontSize: 18 }}>
+                                    Door delivery
+                                </Text>
+                                <View>
+                                    <RadioButton value="DoorDelivery" />
                                 </View>
-                                <Text>First</Text>
                             </View>
-                            <View>
-                                <Text>Second</Text>
-                                <RadioButton value="Pickup" />
+                            <View style={{ flexDirection: "row", alignItems: "center", gap: 10,
+                                justifyContent:'space-between'
+                            }}>
+                                <Text style={{ fontFamily: "SFRegular", fontSize: 18 }}>
+                                    Pickup
+                                </Text>
+                                <View>
+                                    <RadioButton value="Pickup" />
+                                </View>
+
                             </View>
                         </RadioButton.Group>
                     </View>
                 </Animated.View>
+
+                <View style={{ paddingHorizontal: 15, paddingTop: 30,flexDirection:'row',justifyContent:"space-between",
+                    alignItems:'center'
+                 }}>
+                    <Text style={{fontFamily:"SFRegular",fontSize:17}}>
+                        Total
+                    </Text>
+                    <Text style={{fontFamily:"SFSemiBold",fontSize:22}}>
+                        $125.00
+                    </Text>
+                </View>
+
+                {/**Button */}
+                <View style={{ justifyContent: 'center', alignItems: "center", paddingTop: 40 }}>
+                    <TouchableOpacity onPress={()=>navigate.navigate('/Checkout/Payment')}
+                        style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, width: 314, }}
+                    >
+                        <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
+                            Proceed to Payment
+                        </Text>
+                    </TouchableOpacity>
+                </View>
 
             </View>
 
@@ -101,8 +142,6 @@ const styles = StyleSheet.create({
         fontSize: 18,
         width: 270,
         paddingVertical: 13,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: "#9F9F9F"
     }
 })
 

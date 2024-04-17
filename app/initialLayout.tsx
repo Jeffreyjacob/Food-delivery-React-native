@@ -59,6 +59,15 @@ const InitialLayout = () => {
           },
           headerBackVisible:false
         }}/>
+        <Stack.Screen name='Checkout/Payment' options={{
+           headerTitle:'Checkout',
+           headerShadowVisible:false,
+           headerStyle:{
+             backgroundColor:'#F6F6F9'
+           },
+           headerBackVisible:false
+        }}
+        />
     </Stack>
     </GestureHandlerRootView>
     

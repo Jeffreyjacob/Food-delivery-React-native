@@ -66,7 +66,8 @@ const Cart = () => {
                             paddingHorizontal: 20,
                             justifyContent: "center",
                             alignItems: "center",
-                            paddingTop: 40
+                            paddingTop: 40,
+                            paddingBottom:130
                         }}>
                             <FlatList
                                 data={Cart}
