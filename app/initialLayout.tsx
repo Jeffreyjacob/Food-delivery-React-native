@@ -2,6 +2,7 @@ import { View, Text } from 'react-native'
 import React, { useEffect } from 'react'
 import { Stack, useRouter, useSegments } from 'expo-router'
 import { useAuth } from '@clerk/clerk-expo';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 
 const InitialLayout = () => {
@@ -19,6 +20,7 @@ const InitialLayout = () => {
    
      },[isSignedIn])
   return (
+    <GestureHandlerRootView style={{flex:1}}>
        <Stack>
         <Stack.Screen name='index' options={{headerShown:false}}/>
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
@@ -39,7 +41,26 @@ const InitialLayout = () => {
           headerShadowVisible:false,
           headerStyle:{backgroundColor:'#F6F6F9'}
         }}/>
+        <Stack.Screen name='Cart' options={{
+          headerTitle:'Cart',
+          headerBackVisible:false,
+          headerShadowVisible:false,
+          headerStyle:{backgroundColor:'#F6F6F9'},
+          headerTitleStyle:{
+            fontFamily:'SFSemiBold',
+            fontSize:18
+          }
+        }}/>
+        <Stack.Screen name='Checkout/Delivery' options={{
+          headerTitle:'Checkout',
+          headerShadowVisible:false,
+          headerStyle:{
+            backgroundColor:'#F6F6F9'
+          },
+          headerBackVisible:false
+        }}/>
     </Stack>
+    </GestureHandlerRootView>
     
   )
 }

@@ -42,13 +42,13 @@ const Page = () => {
         const fetchData = async () => {
             try {
                 const querySnapshot = await db.collection('Cart').onSnapshot(
-                    docs=>{
-                    const items =  docs.docs.map((doc)=>({
-                            data:doc.data()
-                    }))
+                    docs => {
+                        const items = docs.docs.map((doc) => ({
+                            data: doc.data()
+                        }))
 
-                    console.log(items.map(item => item?.data.meals))
-                    setItemAddedToCart(items.map(item => item.data.meals))
+                        console.log(items.map(item => item?.data.meals))
+                        setItemAddedToCart(items.map(item => item.data.meals))
                     }
                 )
             } catch (err) {
@@ -66,7 +66,7 @@ const Page = () => {
         setCartLoading(true)
         try {
             await db.collection('Cart').add({
-                meals:foodDetails
+                meals: foodDetails
             })
             setCartLoading(false)
             onModalClose(true)
@@ -76,7 +76,7 @@ const Page = () => {
         }
     }
 
-    const itemAddedId = ItemAddedToCart?.map((item)=>item.idMeal);
+    const itemAddedId = ItemAddedToCart?.map((item) => item.idMeal);
 
     return (
         <View style={{ flex: 1, backgroundColor: "#F6F6F9" }}>
@@ -104,74 +104,78 @@ const Page = () => {
                                 </View>
                             )
                         }
-                
-                                <View  style={{ justifyContent: "center", alignItems: "center", paddingHorizontal: 25, paddingTop: 30 }}>
-                                    <View style={styles.plate}>
-                                        <Image source={{ uri: foodDetails?.strMealThumb }}
-                                            style={{ width: 150, height: 150, borderRadius: 80 }}
-                                        />
-                                    </View>
-                                    <Text style={{
-                                        fontSize: 28, fontFamily: "SFSemiBold", width: 320, paddingTop: 20,
-                                        textAlign: 'center'
-                                    }}>
-                                        {foodDetails?.strMeal}
-                                    </Text>
-                                    <Text style={{
-                                        fontSize: 20, fontFamily: "SFSemiBold", color: Colors.backgroundRed,
-                                        paddingTop: 20
-                                    }}>
-                                        $15.00
-                                    </Text>
-                                    <View style={{ width: '100%', paddingTop: 20 }}>
-                                        <Text style={{ fontSize: 28, fontFamily: "SFSemiBold" }}>Ingredients</Text>
-                                        <Text style={{ fontSize: 18, fontFamily: "SFSemiBold", paddingTop: 10 }}>
-                                            {foodDetails?.strIngredient1}, {foodDetails?.strIngredient2}, {foodDetails?.strIngredient3}, {foodDetails?.strIngredient4},
-                                            {foodDetails?.strIngredient5}, {foodDetails?.strIngredient6}, {foodDetails?.strIngredient7}, {foodDetails?.strIngredient8},
-                                            {foodDetails?.strIngredient9}, {foodDetails?.strIngredient10}
-                                        </Text>
-                                    </View>
-                                    <View style={{ paddingTop: 25 }}>
-                                        <Text style={{ fontSize: 22, fontFamily: "SFSemiBold" }}>Return Policy</Text>
-                                        <Text style={{ fontSize: 18, fontFamily: "SFRegular", paddingTop: 10 }}>
-                                            All our foods are double checked before leaving our stores so by any case
-                                            you found a broken food please contact our hotline immediately.
-                                        </Text>
 
-                                    </View>
-                                </View>
-                       
+                        <View style={{ justifyContent: "center", alignItems: "center", paddingHorizontal: 25, paddingTop: 30 }}>
+                            <View style={styles.plate}>
+                                <Image source={{ uri: foodDetails?.strMealThumb }}
+                                    style={{ width: 150, height: 150, borderRadius: 80 }}
+                                />
+                            </View>
+                            <Text style={{
+                                fontSize: 28, fontFamily: "SFSemiBold", width: 320, paddingTop: 20,
+                                textAlign: 'center'
+                            }}>
+                                {foodDetails?.strMeal}
+                            </Text>
+                            <Text style={{
+                                fontSize: 20, fontFamily: "SFSemiBold", color: Colors.backgroundRed,
+                                paddingTop: 20
+                            }}>
+                                $15.00
+                            </Text>
+                            <View style={{ width: '100%', paddingTop: 20 }}>
+                                <Text style={{ fontSize: 28, fontFamily: "SFSemiBold" }}>Ingredients</Text>
+                                <Text style={{ fontSize: 18, fontFamily: "SFSemiBold", paddingTop: 10 }}>
+                                    {foodDetails?.strIngredient1}, {foodDetails?.strIngredient2}, {foodDetails?.strIngredient3}, {foodDetails?.strIngredient4},
+                                    {foodDetails?.strIngredient5}, {foodDetails?.strIngredient6}, {foodDetails?.strIngredient7}, {foodDetails?.strIngredient8},
+                                    {foodDetails?.strIngredient9}, {foodDetails?.strIngredient10}
+                                </Text>
+                            </View>
+                            <View style={{ paddingTop: 25 }}>
+                                <Text style={{ fontSize: 22, fontFamily: "SFSemiBold" }}>Return Policy</Text>
+                                <Text style={{ fontSize: 18, fontFamily: "SFRegular", paddingTop: 10 }}>
+                                    All our foods are double checked before leaving our stores so by any case
+                                    you found a broken food please contact our hotline immediately.
+                                </Text>
+
+                            </View>
+                        </View>
+
                         <View style={{
                             justifyContent: 'center', alignItems: 'center', position: 'absolute', bottom: 50,
                             width: '100%'
                         }}>
-                            
-                            { 
-                                  itemAddedId?.includes(foodDetails?.idMeal)  ? (
-                                    <TouchableOpacity style={{ padding: 25, backgroundColor: "#fc926d", borderRadius: 30, width: 314 }}>
-                                         <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
-                                            Item Added to Cart
-                                        </Text>
-                                    </TouchableOpacity>
-                                  ):(
-                                    <TouchableOpacity onPress={AddToCart}
-                                    style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, width: 314 }}>
-                                    {CartLoading ? (
+                            {
+                                CartLoading ? (
+                                    <TouchableOpacity  style={{ padding: 25, backgroundColor: "#fc926d", borderRadius: 30, width: 314 }}>
                                         <View style={{ flexDirection: 'row', justifyContent: 'center', gap: 10 }}>
                                             <ActivityIndicator color='#fff' />
                                             <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
                                                 ...Adding to Cart
                                             </Text>
                                         </View>
-                                    ) : (
-                                        <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
-                                            Add to Cart
-                                        </Text>
+                                    </TouchableOpacity>
+                                ) : (
+                                    <View>
+                                        {
+                                            itemAddedId?.includes(foodDetails?.idMeal) ? (
+                                                <TouchableOpacity style={{ padding: 25, backgroundColor: "#fc926d", borderRadius: 30, width: 314 }}>
+                                                    <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
+                                                        Item Added to Cart
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            ) : (
+                                                <TouchableOpacity onPress={AddToCart}
+                                                    style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, width: 314 }}>
+                                                    <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
+                                                        Add to Cart
+                                                    </Text>
+                                                </TouchableOpacity>
+                                            )
+                                        }
 
-                                    )
-                                    }
-                                </TouchableOpacity>)
-                                
+                                    </View>
+                                )
                             }
                         </View>
 

@@ -47,6 +47,7 @@ export default function RootLayout() {
     SFRegular: require('../assets/fonts/SF-Pro-Rounded-Regular.ttf'),
     SFBold: require('../assets/fonts/SF-Pro-Rounded-Bold.ttf'),
     SFSemiBold: require('../assets/fonts/SF-Pro-Rounded-Semibold.ttf'),
+    SFMeduim:require('../assets/fonts/SF-Pro-Rounded-Medium.ttf'),
     ...FontAwesome.font,
   });
 

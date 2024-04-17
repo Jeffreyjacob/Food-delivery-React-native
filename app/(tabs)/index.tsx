@@ -38,8 +38,8 @@ export default function TabOneScreen() {
     <View style={{flex:1,backgroundColor:Colors.backgroundGrey}}>
       <Stack.Screen options={{
         headerRight:()=>(
-          <TouchableOpacity style={{marginRight:30}}>
-            <Feather name="shopping-cart" size={24} color={Colors.grey} />
+          <TouchableOpacity style={{marginRight:30}} onPress={()=>navigate.navigate('/Cart')}>
+            <Feather name="shopping-cart" size={24} color='black' />
           </TouchableOpacity>
         )
       }}/>
