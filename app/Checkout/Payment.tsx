@@ -2,15 +2,18 @@ import { View, Text, TouchableOpacity, StyleSheet } from 'react-native'
 import React from 'react'
 import { Stack, useRouter } from 'expo-router'
 import { AntDesign, Entypo, MaterialCommunityIcons } from '@expo/vector-icons'
-import { RadioButton } from 'react-native-paper'
+import { PaperProvider, RadioButton } from 'react-native-paper'
 import Animated from 'react-native-reanimated'
 import Colors from '@/constants/Colors'
+import PaymentModal from '@/components/PaymentModal'
 
 const Payment = () => {
     const navigate = useRouter()
     const [delivery, setDelivery] = React.useState('DoorDelivery');
     const [payment, setPayment] = React.useState('Card');
+    const [modalVisble,setModalVisible] = React.useState(false);
     return (
+        <PaperProvider>
         <View style={{ flex: 1, backgroundColor: "#F6F6F9" }}>
             <Stack.Screen options={{
                 headerLeft: () => (
@@ -24,6 +27,14 @@ const Payment = () => {
                 }
             }} />
             <View style={{ paddingHorizontal: 30, paddingVertical: 25 }}>
+                {/**Modal */}
+                {
+                            modalVisble && (
+                                <View>
+                                    <PaymentModal visible={modalVisble} onClose={() => setModalVisible(false)} />
+                                </View>
+                            )
+                        }
                 {/**payment Method*/}
                 <Animated.View>
                     <Text style={{ fontSize: 34, fontFamily: "SFSemiBold" }}>Payment</Text>
@@ -138,7 +149,7 @@ const Payment = () => {
 
                 {/**Button */}
                 <View style={{ justifyContent: 'center', alignItems: "center", paddingTop: 40 }}>
-                    <TouchableOpacity onPress={() => navigate.navigate('/Checkout/Payment')}
+                    <TouchableOpacity onPress={()=>setModalVisible(true)}
                         style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, width: 314, }}
                     >
                         <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
@@ -149,6 +160,7 @@ const Payment = () => {
 
             </View>
         </View>
+        </PaperProvider>
     )
 }
 
