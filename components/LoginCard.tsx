@@ -37,6 +37,7 @@ const LoginCard = () => {
          if(isClerkAPIResponseError(err)){
           Alert.alert('Error',err.errors[0].message)
          }
+         setLoading(false)
       }
 
     }
@@ -96,7 +97,7 @@ const LoginCard = () => {
         loading ? 
         <TouchableOpacity style={{ padding: 25, backgroundColor: "#FA4A0C", borderRadius: 30, marginTop: 100, width: 314 }}
         disabled>
-          <View style={{flexDirection:"row",gap:10}}>
+          <View style={{flexDirection:"row",gap:10,justifyContent:"center"}}>
           <ActivityIndicator color='#fff'/>
             <Text style={{ fontFamily: "SFSemiBold", color: 'white', textAlign: "center", fontSize: 18 }}>
               Loading...

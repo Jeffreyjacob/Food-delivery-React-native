@@ -33,7 +33,8 @@ export default function TabLayout() {
       }}
       />
       <Tabs.Screen name='Profile' options={{
-        tabBarLabel:"",tabBarIcon:({color,size})=>(<Octicons name="person" size={size} color={color} />),
+        tabBarLabel:"",tabBarIcon:({color,size})=>(<Octicons name="person" size={size} color={color}/>),
+        headerShown:false
       }}
       />
       <Tabs.Screen name='History' options={{
