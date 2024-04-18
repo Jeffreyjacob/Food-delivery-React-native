@@ -39,6 +39,11 @@ export default function TabLayout() {
       />
       <Tabs.Screen name='History' options={{
         tabBarLabel:"",tabBarIcon:({color,size})=>(<MaterialCommunityIcons name="history" size={size} color={color} />),
+        headerTitle:'History',
+        headerShadowVisible:false,
+        headerStyle:{
+          backgroundColor:'#F6F6F9'
+        }
       }}
       />
 
